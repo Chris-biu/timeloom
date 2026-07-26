@@ -1,0 +1,21 @@
+name: Feature request
+description: Suggest a capability timeloom does not have yet.
+labels: [enhancement, needs-triage]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you hitting?
+      description: Describe the situation, not the solution. What did you want to do and what stopped you?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would you like timeloom to do?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What did you try instead?

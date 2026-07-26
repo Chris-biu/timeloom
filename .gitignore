@@ -1,0 +1,20 @@
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# timeloom's own snapshot store, if you dogfood it on this repo
+.timeloom/
+
+# Editors / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Env
+.env
+.env.*
+!.env.example
