@@ -129,7 +129,16 @@ export async function scanTree(options: ScanOptions): Promise<ScanResult> {
       if (dirent.isSymbolicLink()) {
         // Following links risks escaping the project and looping. Recording them as
         // skipped means restore also leaves them alone, which is the safe default.
-        if (!matcher.decideDirect(repoPath, false).ignored) {
+        //
+        // Whether the link is *worth mentioning* has to be decided under both
+        // interpretations, because we deliberately do not stat the target and so do
+        // not know if it is a file or a directory. A rule like `node_modules/` only
+        // matches with directory semantics, and a symlinked `node_modules` is exactly
+        // what pnpm and most monorepos produce — reporting one as an untracked file
+        // would put a line of noise in front of every such user.
+        const ignoredAsFile = matcher.decideDirect(repoPath, false).ignored;
+        const ignoredAsDirectory = matcher.decideDirect(repoPath, true).ignored;
+        if (!ignoredAsFile && !ignoredAsDirectory) {
           skipped.push({ path: repoPath, reason: 'symlink', size: null });
         }
         continue;
